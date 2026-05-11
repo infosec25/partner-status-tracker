@@ -10,19 +10,19 @@ LOG_FILE = "logs.txt"
 
 # Default users
 default_data = {
-    "ASHISH": {
+    "RAJDHWAJ": {
         "status": False,
         "last_click": "Never"
     },
-    "VARUN": {
+    "RAJSHREE": {
         "status": False,
         "last_click": "Never"
     },
-    "RITESH": {
+    "RAJTARANG": {
         "status": False,
         "last_click": "Never"
     },
-    "UTKARSH": {
+    "RAJKIRAN": {
         "status": False,
         "last_click": "Never"
     }
@@ -83,7 +83,7 @@ def track(username):
 
         save_log(username, "TRUE")
 
-    return redirect("/")
+    return redirect("/thankyou")
 
 # Reset route
 @app.route("/reset/<username>")
@@ -113,6 +113,11 @@ def logs():
     log_data.reverse()
 
     return render_template("logs.html", logs=log_data)
+
+# Thank You Page
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
