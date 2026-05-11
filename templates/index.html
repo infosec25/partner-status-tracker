@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Status Tracker</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+
+        h1{
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .container{
+            width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        .user{
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name{
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .status{
+            padding: 8px 18px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .true{
+            background: green;
+        }
+
+        .false{
+            background: red;
+        }
+
+        .time{
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .btn{
+            margin-top: 15px;
+            display: inline-block;
+            padding: 8px 15px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn:hover{
+            background: black;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>User Status Tracker</h1>
+
+    {% for user, info in users.items() %}
+
+    <div class="user">
+
+        <div class="top">
+
+            <div class="name">
+                {{ user }}
+            </div>
+
+            <div class="status {{ 'true' if info.status else 'false' }}">
+                {{ 'TRUE' if info.status else 'FALSE' }}
+            </div>
+
+        </div>
+
+        <div class="time">
+            Last Click: {{ info.last_click }}
+        </div>
+
+        <a class="btn" href="/reset/{{ user }}">
+            Reset Status
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
