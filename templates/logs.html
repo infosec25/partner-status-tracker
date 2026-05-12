@@ -2,50 +2,87 @@
 <html>
 <head>
 
-    <title>Activity Logs</title>
+    <title>Logs</title>
 
     <style>
 
         body{
             font-family: Arial;
-            background: #f4f4f4;
-            padding: 40px;
+            background: #f4f6f9;
+            padding: 30px;
         }
 
         .container{
-            width: 800px;
+            max-width: 900px;
             margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
         }
 
         h1{
             text-align: center;
+            color: #111827;
             margin-bottom: 30px;
         }
 
-        .log{
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            font-family: monospace;
+        .user-box{
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        .user-title{
+            font-size: 22px;
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .log-entry{
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back-btn{
+            display: inline-block;
+            padding: 12px 20px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
     </style>
 
 </head>
-
 <body>
 
 <div class="container">
 
-    <h1>Activity Logs</h1>
+    <a href="/" class="back-btn">BACK TO DASHBOARD</a>
 
-    {% for log in logs %}
+    <h1>ACTIVITY LOGS</h1>
 
-        <div class="log">
-            {{ log }}
+    {% for user, logs in grouped_logs.items() %}
+
+    <div class="user-box">
+
+        <div class="user-title">
+            {{ user }}
         </div>
+
+        {% for log in logs %}
+
+        <div class="log-entry">
+
+            {{ log.timestamp }} →
+            {{ log.action }}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
 
     {% endfor %}
 

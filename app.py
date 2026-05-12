@@ -1,123 +1,131 @@
+
 from flask import Flask, render_template, redirect
 import json
-import os
 from datetime import datetime
 
 app = Flask(__name__)
 
-DATA_FILE = "users.json"
+USERS_FILE = "users.json"
 LOG_FILE = "logs.txt"
 
-# Default users
-default_data = {
-    "RAJDHWAJ": {
-        "status": False,
-        "last_click": "Never"
-    },
-    "RAJSHREE": {
-        "status": False,
-        "last_click": "Never"
-    },
-    "RAJTARANG": {
-        "status": False,
-        "last_click": "Never"
-    },
-    "RAJKIRAN": {
-        "status": False,
-        "last_click": "Never"
-    }
-}
 
-# Create users.json if not exists
-if not os.path.exists(DATA_FILE):
-    with open(DATA_FILE, "w") as file:
-        json.dump(default_data, file, indent=4)
-
-# Create logs.txt if not exists
-if not os.path.exists(LOG_FILE):
-    open(LOG_FILE, "w").close()
-
-# Read user data
-def get_data():
-    with open(DATA_FILE, "r") as file:
+# LOAD USERS
+def load_users():
+    with open(USERS_FILE, "r") as file:
         return json.load(file)
 
-# Save user data
-def save_data(data):
-    with open(DATA_FILE, "w") as file:
+
+# SAVE USERS
+def save_users(data):
+    with open(USERS_FILE, "w") as file:
         json.dump(data, file, indent=4)
 
-# Save logs
-def save_log(username, action):
 
-    time_now = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-
-    log_entry = f"{time_now} | {username} | {action}\n"
+# WRITE LOGS
+def write_log(username, action):
+    timestamp = datetime.now().strftime("%d-%m-%Y %I:%M:%S %p")
 
     with open(LOG_FILE, "a") as file:
-        file.write(log_entry)
+        file.write(f"{timestamp} | {username.upper()} | {action}\n")
 
-# Homepage
+
+# HOME PAGE
 @app.route("/")
 def home():
-
-    users = get_data()
-
+    users = load_users()
     return render_template("index.html", users=users)
 
-# Track route
+
+# TRACK USER
 @app.route("/track/<username>")
 def track(username):
-
-    users = get_data()
-
-    username = username.upper()
+    users = load_users()
 
     if username in users:
-
         users[username]["status"] = True
+        users[username]["timestamp"] = datetime.now().strftime(
+            "%d-%m-%Y %I:%M:%S %p"
+        )
 
-        users[username]["last_click"] = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        save_users(users)
 
-        save_data(users)
-
-        save_log(username, "TRUE")
+        write_log(username, "STATUS TRUE")
 
     return redirect("/thankyou")
 
-# Reset route
-@app.route("/reset/<username>")
-def reset(username):
 
-    users = get_data()
+# RESET ALL STATUS
+@app.route("/reset-all")
+def reset_all():
+    users = load_users()
 
-    username = username.upper()
+    for user in users:
+        users[user]["status"] = False
 
-    if username in users:
+    save_users(users)
 
-        users[username]["status"] = False
-
-        save_data(users)
-
-        save_log(username, "RESET")
+    write_log("SYSTEM", "ALL STATUS RESET")
 
     return redirect("/")
 
-# Logs page
+
+# CLEAR LOGS
+@app.route("/clear-logs")
+def clear_logs():
+
+    # CLEAR LOG FILE
+    open(LOG_FILE, "w").close()
+
+    # RESET ALL USERS
+    users = load_users()
+
+    for user in users:
+        users[user]["status"] = False
+        users[user]["timestamp"] = "--"
+
+    save_users(users)
+
+    return redirect("/")
+
+
+# LOGS PAGE
 @app.route("/logs")
 def logs():
 
-    with open(LOG_FILE, "r") as file:
-        log_data = file.readlines()
+    grouped_logs = {}
 
-    log_data.reverse()
+    try:
+        with open(LOG_FILE, "r") as file:
+            lines = file.readlines()
 
-    return render_template("logs.html", logs=log_data)
+        # latest logs first
+        lines.reverse()
 
-# Thank You Page
+        for line in lines:
+            parts = line.strip().split(" | ")
+
+            if len(parts) == 3:
+                timestamp, username, action = parts
+
+                if username not in grouped_logs:
+                    grouped_logs[username] = []
+
+                grouped_logs[username].append({
+                    "timestamp": timestamp,
+                    "action": action
+                })
+
+    except FileNotFoundError:
+        pass
+
+    return render_template("logs.html", grouped_logs=grouped_logs)
+
+
+# THANK YOU PAGE
 @app.route("/thankyou")
 def thankyou():
     return render_template("thankyou.html")
 
+
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    app.run(debug=True)

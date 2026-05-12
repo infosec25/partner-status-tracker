@@ -1,118 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <title>Status Tracker</title>
+    <title>Partner Status Tracker</title>
 
     <style>
 
         body{
             font-family: Arial;
-            background: #f4f4f4;
-            padding: 40px;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container{
+            max-width: 900px;
+            margin: auto;
         }
 
         h1{
             text-align: center;
-            margin-bottom: 40px;
+            color: #1f2937;
+            margin-bottom: 30px;
         }
 
-        .container{
-            width: 700px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-        }
-
-        .user{
-            padding: 20px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .top{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .name{
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .status{
-            padding: 8px 18px;
-            border-radius: 20px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .true{
-            background: green;
-        }
-
-        .false{
-            background: red;
-        }
-
-        .time{
-            margin-top: 10px;
-            color: #555;
+        .button-group{
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         .btn{
-            margin-top: 15px;
-            display: inline-block;
-            padding: 8px 15px;
-            background: #222;
-            color: white;
-            text-decoration: none;
+            padding: 12px 22px;
+            border: none;
             border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            margin: 5px;
+            font-weight: bold;
         }
 
-        .btn:hover{
-            background: black;
+        .reset-btn{
+            background: #2563eb;
+        }
+
+        .logs-btn{
+            background: #059669;
+        }
+
+        .clear-btn{
+            background: #dc2626;
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        th{
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        td{
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .true{
+            color: green;
+            font-weight: bold;
+        }
+
+        .false{
+            color: red;
+            font-weight: bold;
+        }
+
+        tr:hover{
+            background: #f9fafb;
         }
 
     </style>
 
 </head>
-
 <body>
 
 <div class="container">
 
-    <h1>User Status Tracker</h1>
+    <h1>PARTNER STATUS TRACKER</h1>
 
-    {% for user, info in users.items() %}
+    <div class="button-group">
 
-    <div class="user">
+        <a href="/reset-all" class="btn reset-btn">
+            RESET ALL STATUS
+        </a>
 
-        <div class="top">
+        <a href="/logs" class="btn logs-btn">
+            VIEW LOGS
+        </a>
 
-            <div class="name">
-                {{ user }}
-            </div>
-
-            <div class="status {{ 'true' if info.status else 'false' }}">
-                {{ 'TRUE' if info.status else 'FALSE' }}
-            </div>
-
-        </div>
-
-        <div class="time">
-            Last Click: {{ info.last_click }}
-        </div>
-
-        <a class="btn" href="/reset/{{ user }}">
-            Reset Status
+        <a href="/clear-logs" class="btn clear-btn">
+            CLEAR LOGS
         </a>
 
     </div>
 
-    {% endfor %}
+    <table>
+
+        <tr>
+            <th>USER</th>
+            <th>STATUS</th>
+            <th>LAST UPDATED</th>
+            
+        </tr>
+
+        {% for user, data in users.items() %}
+
+        <tr>
+
+            <td>{{ user.upper() }}</td>
+
+            <td>
+                {% if data.status %}
+                    <span class="true">TRUE</span>
+                {% else %}
+                    <span class="false">FALSE</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {{ data.timestamp }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
 
 </div>
 
