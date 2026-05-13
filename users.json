@@ -9,6 +9,16 @@
         "last_click": "Never",
         "timestamp": "--"
     },
+    "forest": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "dfishries": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
     "airpot-vsi": {
         "status": false,
         "last_click": "Never",
