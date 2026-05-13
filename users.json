@@ -1,5 +1,105 @@
 {
-    "rajdhwaj": {
+    "spcbi": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "harbourcisf": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "airpot-vsi": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "sp-pmf": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "pmb": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "secretary-fisheries": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "sp-cid": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "assistantsecretary-home": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "nau": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "police-control": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "customs": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "rhq": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "dhq14": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "dhq9": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "dhq10": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "hutbay": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "kamorta": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "mayabundar": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "vijit": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "vst": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "rajveer": {
         "status": false,
         "last_click": "Never",
         "timestamp": "--"
@@ -9,14 +109,37 @@
         "last_click": "Never",
         "timestamp": "--"
     },
-    "rajtarang": {
-        "status": true,
+    "rajdoot": {
+        "status": false,
         "last_click": "Never",
-        "timestamp": "12-05-2026 09:38:08 AM"
+        "timestamp": "--"
+    },
+    "rajkamal": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
     },
     "rajkiran": {
         "status": false,
         "last_click": "Never",
-        "timestamp": "12-05-2026 09:36:18 AM"
+        "timestamp": "--"
+    },
+    "cgrsd": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "cgrpt": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
+    },
+    "roc": {
+        "status": false,
+        "last_click": "Never",
+        "timestamp": "--"
     }
+
+
+
 }

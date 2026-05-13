@@ -2,6 +2,7 @@
 from flask import Flask, render_template, redirect
 import json
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 
@@ -23,7 +24,9 @@ def save_users(data):
 
 # WRITE LOGS
 def write_log(username, action):
-    timestamp = datetime.now().strftime("%d-%m-%Y %I:%M:%S %p")
+    timestamp = datetime.now(
+    ZoneInfo("Asia/Kolkata")
+).strftime("%d-%m-%Y %I:%M:%S %p")
 
     with open(LOG_FILE, "a") as file:
         file.write(f"{timestamp} | {username.upper()} | {action}\n")
@@ -37,15 +40,13 @@ def home():
 
 
 # TRACK USER
-@app.route("/track/<username>")
+@app.route("/view/<username>")
 def track(username):
     users = load_users()
 
     if username in users:
         users[username]["status"] = True
-        users[username]["timestamp"] = datetime.now().strftime(
-            "%d-%m-%Y %I:%M:%S %p"
-        )
+        users[username]["timestamp"] = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%d-%m-%Y %I:%M:%S %p")
 
         save_users(users)
 
@@ -67,7 +68,24 @@ def reset_all():
     write_log("SYSTEM", "ALL STATUS RESET")
 
     return redirect("/")
+@app.route("/view/<username>")
+def view_document(username):
 
+    users = load_users()
+
+    if username in users:
+
+        users[username]["status"] = True
+
+        users[username]["timestamp"] = datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).strftime("%d-%m-%Y %I:%M:%S %p")
+
+        save_users(users)
+
+        write_log(username, "LINK OPENED")
+
+    return render_template("thankyou.html")
 
 # CLEAR LOGS
 @app.route("/clear-logs")
